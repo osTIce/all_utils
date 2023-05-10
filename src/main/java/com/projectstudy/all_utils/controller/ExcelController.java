@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ExcelController {
 
-    @GetMapping("/excel/excelToFolderName")
+    @GetMapping("/excel/excelToFileName")
     public String ExcelToFolderName(){
-        return "/excel/excelToFolderName";
+        return "/excel/excelToFileName";
     }
 }
