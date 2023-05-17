@@ -8,7 +8,7 @@ public interface ExcelService {
 
     /**
      * 엑셀 서식 파일 다운로드 메서드
-     * return: void
+     * return: ResponseEntity<Resource>
      * date: 2023-05-13
      */
     public ResponseEntity<Resource> excelTemplateFileDown(String filePath, String fileName);

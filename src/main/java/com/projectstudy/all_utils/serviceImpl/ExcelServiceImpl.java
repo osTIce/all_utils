@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -30,6 +27,11 @@ public class ExcelServiceImpl implements ExcelService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
+    /**
+     * 엑셀 서식 파일 다운로드 메서드
+     * return: ResponseEntity<Resource>
+     * date: 2023-05-13
+     */
     @Override
     public ResponseEntity<Resource> excelTemplateFileDown(String filePath, String fileName) {
 
@@ -38,7 +40,7 @@ public class ExcelServiceImpl implements ExcelService {
             File file = resource.getFile();
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, file.getName())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
                     .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString())
                     .body(resource);

@@ -23,12 +23,14 @@ public class ExcelController {
         return "/excel/excelToFileName";
     }
 
+    /**
+     * 엑셀 서식 파일 다운로드 메서드
+     * return: ResponseEntity<Resource>
+     * date: 2023-05-13
+     */
     @GetMapping("/excel/excelFormDown")
     public ResponseEntity<Resource> excelFormDown(){
-        logger.info("excelFormDown method run");
 
-        ResponseEntity<Resource> excelFile = excelService.excelTemplateFileDown("classpath:/static/excel/", "ExcelTemplate.xlsx");
-
-        return excelFile;
+        return excelService.excelTemplateFileDown("classpath:/static/excel/", "ExcelTemplate.xlsx");
     }
 }
