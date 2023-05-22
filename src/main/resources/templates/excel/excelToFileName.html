@@ -20,9 +20,8 @@
         <input class="file-upload-name" placeholder="Excel 서식 업로드" disabled>
         <button class="btn-down">
             <label for="file-upload">Excel 서식 업로드</label>
-            <input class="file-upload" id="file-upload" type="file">
+            <input class="file-upload" id="file-upload" type="file" th:onchange="fileChange(this)">
         </button>
     </div>
-
 </body>
 </html>
