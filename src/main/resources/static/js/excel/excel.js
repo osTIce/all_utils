@@ -29,12 +29,6 @@ function fileChange(obj){
 
 function fileUpload(file){
 
-    var xhr = new XMLHttpRequest();
-    var method = "POST";
-    var url = "/excel/excelToFileName";
-
-    xhr.open(method, url, true);
-    xhr.send(file);
 
 
 }
