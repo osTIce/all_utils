@@ -29,6 +29,16 @@ function fileChange(obj){
 
 function fileUpload(file){
 
+    var data = new FormData();
+    data.append('file', file);
 
+    fetch("/excel/excelToFileName", {
+        method: "POST",
+        body: data
+    }).then(res =>{
+        console.log(res);
+    }).catch(error=>{
+        console.log(error);
+    })
 
 }

@@ -20,7 +20,7 @@
         <input class="file-upload-name" placeholder="Excel 서식 업로드" id="upload-name" disabled>
         <button class="btn-down">
             <label for="file-upload">Excel 서식 업로드</label>
-            <input class="file-upload" id="file-upload" type="file" th:onchange="fileChange(this)">
+            <input class="file-upload" name="fileUpload" id="file-upload" type="file" th:onchange="fileChange(this)">
         </button>
         <h4 id="sub-message">(xls, xlsx 확장자 파일만 업로드 가능합니다.)</h4>
     </div>
