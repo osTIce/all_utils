@@ -7,6 +7,7 @@ function fileChange(obj){
     var fileExt = fileFullName.substring(fileDot + 1, fileFullName.length);
     var fileExtLow = fileExt.toLowerCase();
 
+    var uploadForm = document.getElementById('upload-form');
     var fileUploadBtn = document.getElementById('file-upload');
     var confirm = window.confirm("해당 파일로 확정하시겠습니까?");
 
@@ -18,7 +19,7 @@ function fileChange(obj){
     if(confirm){
         if(fileExtLow == "xls" || fileExtLow == "xlsx"){
             document.getElementById('upload-name').value = filePath;
-            fileUpload(filePath);
+            fileUpload(uploadForm);
         }else{
             document.getElementById('upload-name').value = "";
             alert("업로드 파일의 확장자를 확인해주시기 바랍니다.");
@@ -29,11 +30,11 @@ function fileChange(obj){
 
 function fileUpload(file){
 
-    var data = new FormData();
-    data.append('file', file);
+    var data = new FormData(file);
 
     fetch("/excel/excelToFileName", {
         method: "POST",
+        headers: {},
         body: data
     }).then(res =>{
         console.log(res);

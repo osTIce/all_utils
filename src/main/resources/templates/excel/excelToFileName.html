@@ -15,14 +15,16 @@
         <button type="button" class="btn-down"> <span th:onclick="|location.href='@{/excel/excelFormDown}'|">Excel 서식 다운로드</span> </button>
     </div>
 
-    <div class="step">
-        <h2 id="flo-left">2. 1번에서 다운로드 한 Excel 서식 업로드 진행</h2>
-        <input class="file-upload-name" placeholder="Excel 서식 업로드" id="upload-name" disabled>
-        <button class="btn-down">
-            <label for="file-upload">Excel 서식 업로드</label>
-            <input class="file-upload" name="fileUpload" id="file-upload" type="file" th:onchange="fileChange(this)">
-        </button>
-        <h4 id="sub-message">(xls, xlsx 확장자 파일만 업로드 가능합니다.)</h4>
-    </div>
+    <form enctype="multipart/form-data" th:action="@{/excel/excelToFileName}" method="post" id="upload-form">
+        <div class="step">
+            <h2 id="flo-left">2. 1번에서 다운로드 한 Excel 서식 업로드 진행</h2>
+            <input class="file-upload-name" placeholder="Excel 서식 업로드" id="upload-name" disabled>
+            <button class="btn-down" type="button">
+                <label for="file-upload">Excel 서식 업로드</label>
+                <input class="file-upload" name="fileUpload" id="file-upload" type="file" th:onchange="fileChange(this)">
+            </button>
+            <h4 id="sub-message">(xls, xlsx 확장자 파일만 업로드 가능합니다.)</h4>
+        </div>
+    </form>
 </body>
 </html>

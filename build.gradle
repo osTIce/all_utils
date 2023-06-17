@@ -15,9 +15,13 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	/* thymeleaf layout 관련 그레이들 */
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	/* Excel poi 관련 그레이들 */
+	implementation group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+	implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+	implementation group: 'org.apache.tika', name: 'tika-core', version: '2.3.0'
 }
 
 tasks.named('test') {

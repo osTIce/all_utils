@@ -2,6 +2,7 @@ package com.projectstudy.all_utils.controller;
 
 import com.projectstudy.all_utils.service.ExcelService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import java.util.Iterator;
-
 
 @Controller
 public class ExcelController {
@@ -31,9 +28,12 @@ public class ExcelController {
     }
 
     @PostMapping("/excel/excelToFileName")
-    public void ExcelToFileName(MultipartHttpServletRequest multiRequest){
-        MultipartFile file = multiRequest.getFile("file");
-        System.out.println(file);
+    public void ExcelToFileName(@RequestParam("fileUpload") MultipartFile file){
+
+        Workbook workbook = null;
+
+
+
     }
 
     /**
