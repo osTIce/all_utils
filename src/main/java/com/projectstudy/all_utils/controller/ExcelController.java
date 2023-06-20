@@ -1,8 +1,12 @@
 package com.projectstudy.all_utils.controller;
 
 import com.projectstudy.all_utils.service.ExcelService;
+import com.projectstudy.all_utils.serviceImpl.ExcelReadDTO;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ExcelController {
@@ -27,12 +35,45 @@ public class ExcelController {
         return "/excel/excelToFileName";
     }
 
+    /**
+     * 엑셀 서식 파일 업로드 메서드
+     * return: void
+     * date: 2023-06-20
+     */
     @PostMapping("/excel/excelToFileName")
     public void ExcelToFileName(@RequestParam("fileUpload") MultipartFile file){
 
-        Workbook workbook = null;
+        try{
 
+            List<ExcelReadDTO> excelReadList = new ArrayList<>();
 
+            Workbook workbook = null;
+            workbook = new XSSFWorkbook(file.getInputStream());
+
+            if(workbook != null) {
+                Sheet sheet = workbook.getSheetAt(0);
+
+                for (int i = 2; i < sheet.getPhysicalNumberOfRows(); i++) {
+                    Row row = sheet.getRow(i);
+
+                    ExcelReadDTO excelReadDTO = new ExcelReadDTO();
+
+                    excelReadDTO.setOldName(row.getCell(1).getStringCellValue());
+                    excelReadDTO.setNewName(row.getCell(2).getStringCellValue());
+
+                    logger.info(excelReadDTO.getOldName());
+                    logger.info(excelReadDTO.getNewName());
+
+                    excelReadList.add(excelReadDTO);
+
+                }
+            } else {
+                logger.error("해당 파일이 존재하지 않습니다.");
+            }
+
+        }catch (IOException e){
+            logger.error("파일 읽기 오류가 발생했습니다.");
+        }
 
     }
 

@@ -37,9 +37,9 @@ function fileUpload(file){
         headers: {},
         body: data
     }).then(res =>{
-        console.log(res);
+        console.log("성공");
     }).catch(error=>{
-        console.log(error);
+        console.log("실패");
     })
 
 }
