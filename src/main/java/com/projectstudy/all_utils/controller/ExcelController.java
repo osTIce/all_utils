@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,11 +42,11 @@ public class ExcelController {
      * date: 2023-06-20
      */
     @PostMapping("/excel/excelToFileName")
-    public void ExcelToFileName(@RequestParam("fileUpload") MultipartFile file){
+    public String ExcelToFileName(@RequestParam("fileUpload") MultipartFile file, Model model){
+
+        List<ExcelReadDTO> fileNameList = new ArrayList<>();
 
         try{
-
-            List<ExcelReadDTO> excelReadList = new ArrayList<>();
 
             Workbook workbook = null;
             workbook = new XSSFWorkbook(file.getInputStream());
@@ -64,9 +65,12 @@ public class ExcelController {
                     logger.info(excelReadDTO.getOldName());
                     logger.info(excelReadDTO.getNewName());
 
-                    excelReadList.add(excelReadDTO);
-
+                    fileNameList.add(excelReadDTO);
                 }
+
+                model.addAttribute("nameList", fileNameList);
+                model.addAttribute("chk", "확인");
+
             } else {
                 logger.error("해당 파일이 존재하지 않습니다.");
             }
@@ -75,6 +79,9 @@ public class ExcelController {
             logger.error("파일 읽기 오류가 발생했습니다.");
         }
 
+        logger.info("리스트 길이 확인: " + fileNameList.size());
+
+        return "/excel/excelToFileName";
     }
 
     /**
