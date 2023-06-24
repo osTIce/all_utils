@@ -1,5 +1,6 @@
 package com.projectstudy.all_utils.controller;
 
+import com.projectstudy.all_utils.service.ExcelNameService;
 import com.projectstudy.all_utils.service.ExcelService;
 import com.projectstudy.all_utils.serviceImpl.ExcelReadDTO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +29,8 @@ public class ExcelController {
 
     @Autowired
     private ExcelService excelService;
+    @Autowired
+    private ExcelNameService excelNameService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -42,7 +45,7 @@ public class ExcelController {
      * date: 2023-06-20
      */
     @PostMapping("/excel/excelToFileName")
-    public String ExcelToFileName(@RequestParam("fileUpload") MultipartFile file, Model model){
+    public void ExcelToFileName(@RequestParam("fileUpload") MultipartFile file, Model model){
 
         List<ExcelReadDTO> fileNameList = new ArrayList<>();
 
@@ -79,9 +82,12 @@ public class ExcelController {
             logger.error("파일 읽기 오류가 발생했습니다.");
         }
 
-        logger.info("리스트 길이 확인: " + fileNameList.size());
+        List<ExcelReadDTO> nameList = excelNameService.findAll();
+        for (ExcelReadDTO test : nameList) {
+            System.out.println(test.toString());
+        }
 
-        return "/excel/excelToFileName";
+        logger.info("리스트 길이 확인: " + fileNameList.size());
     }
 
     /**

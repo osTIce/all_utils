@@ -24,16 +24,6 @@
                 <input class="file-upload" name="fileUpload" id="file-upload" type="file" th:onchange="fileChange(this)">
             </button>
             <h4 id="sub-message">(xls, xlsx 확장자 파일만 업로드 가능합니다.)</h4>
-            <table>
-                <tr>
-                    <th> 기존 이름 </th>
-                    <th> 변경 이름 </th>
-                </tr>
-                <tr th:each="oldName : ${nameList}">
-                    <td th:text="${oldName.oldName}"></td>
-                </tr>
-                <h1 th:text="${chk}"></h1>
-            </table>
         </div>
     </form>
 
