@@ -18,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,6 +36,11 @@ public class ExcelController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
+    /**
+     * 파일 이름 일괄 변경 페이지로 이동 메서드
+     * return: String
+     * date: 2023-05-13
+     */
     @GetMapping("/excel/excelToFileName")
     public String ExcelToFileName(){
         return "/excel/excelToFileName";
@@ -48,6 +55,9 @@ public class ExcelController {
     public void ExcelToFileName(@RequestParam("fileUpload") MultipartFile file, Model model){
 
         List<ExcelReadDTO> fileNameList = new ArrayList<>();
+        String ip = getUserIp();
+
+        excelNameService.ExcelNameRemove(ip);
 
         try{
 
@@ -64,15 +74,15 @@ public class ExcelController {
 
                     excelReadDTO.setOldName(row.getCell(1).getStringCellValue());
                     excelReadDTO.setNewName(row.getCell(2).getStringCellValue());
+                    excelReadDTO.setIp(ip);
 
                     logger.info(excelReadDTO.getOldName());
                     logger.info(excelReadDTO.getNewName());
+                    logger.info(excelReadDTO.getIp());
 
                     fileNameList.add(excelReadDTO);
+                    excelNameService.ExcelNameSave(excelReadDTO);
                 }
-
-                model.addAttribute("nameList", fileNameList);
-                model.addAttribute("chk", "확인");
 
             } else {
                 logger.error("해당 파일이 존재하지 않습니다.");
@@ -81,13 +91,6 @@ public class ExcelController {
         }catch (IOException e){
             logger.error("파일 읽기 오류가 발생했습니다.");
         }
-
-        List<ExcelReadDTO> nameList = excelNameService.findAll();
-        for (ExcelReadDTO test : nameList) {
-            System.out.println(test.toString());
-        }
-
-        logger.info("리스트 길이 확인: " + fileNameList.size());
     }
 
     /**
@@ -99,5 +102,46 @@ public class ExcelController {
     public ResponseEntity<Resource> excelFormDown(){
 
         return excelService.excelTemplateFileDown("classpath:/static/excel/", "ExcelTemplate.xlsx");
+    }
+
+    /**
+     * 사용자 IP 조회 메서드
+     * return: String
+     * date: 2023-06-25
+     */
+    public String getUserIp(){
+
+        String ip = null;
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
+        ip = request.getHeader("X-Forwarded-For");
+
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Real-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-RealIP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("REMOTE_ADDR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+
+        return ip;
     }
 }
