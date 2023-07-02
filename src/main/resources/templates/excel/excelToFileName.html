@@ -27,14 +27,32 @@
         </div>
     </form>
 
-    <div class="step">
-        <h2>3. 변경할 파일 목록 업로드</h2>
-        <input class="file-upload-name" placeholder="변경할 파일 목록 업로드" disabled>
-        <button class="btn-down" type="button">
-            <label for="file-list-upload">변경 파일 업로드</label>
-            <input class="file-upload" name="fileListUpload" id="file-list-upload" type="file">
-        </button>
-    </div>
+    <form enctype="multipart/form-data" th:action="@{/excel/excelToFileList}" method="post" id="list-upload-form">
+        <div class="step">
+            <h2>3. 변경할 파일 목록 업로드</h2>
+            <input class="file-upload-name" placeholder="변경할 파일 목록 업로드" disabled>
+            <button class="btn-down" type="button">
+                <label for="file-list-upload">변경 파일 업로드</label>
+                <input class="file-upload" name="fileListUpload" id="file-list-upload" type="file" th:onchange="listChange(this)" multiple>
+            </button>
+        </div>
+    </form>
+
+    <table hidden="hidden" id = list-table>
+        <thead>
+            <th> 파일 명 </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td> TEST </td>
+                <td> TEST </td>
+                <td> TEST </td>
+                <td> TEST </td>
+                <td> TEST </td>
+                <td> TEST </td>
+            </tr>
+        </tbody>
+    </table>
 
 </body>
 </html>

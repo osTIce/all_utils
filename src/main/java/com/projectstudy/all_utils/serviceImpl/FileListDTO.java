@@ -1,30 +1,23 @@
 package com.projectstudy.all_utils.serviceImpl;
 
 import jakarta.persistence.*;
-import org.apache.poi.poifs.crypt.dsig.services.TimeStampService;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
 @Entity
 @SequenceGenerator(
-        name = "FILE_SEQ_GENERATOR"
-        , sequenceName = "FILE_SEQ"
+        name = "FILE_LIST_SEQ_GENERATOR"
+        , sequenceName = "FILE_LIST_SEQ"
         , initialValue = 1
         , allocationSize = 1
 )
-@Table(name="EXCELNAME")
-public class ExcelReadDTO {
+@Table(name="FILELIST")
+public class FileListDTO {
 
-    // 파일 변경 전 이름
-    @Column(name="OLDNAME")
-    private String oldName = null;
-    // 파일 변경 후 이름
-    @Column(name="NEWNAME")
-    private String newName = null;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE
-            , generator = "FILE_SEQ_GENERATOR")
+            , generator = "FILE_LIST_SEQ_GENERATOR")
     @Column(name="SN")
     private Long sn = null;
 
@@ -34,22 +27,6 @@ public class ExcelReadDTO {
     @CreationTimestamp
     @Column(name="UPLOAD_DATE")
     private Timestamp upload_date = null;
-
-    public String getOldName() {
-        return oldName;
-    }
-
-    public void setOldName(String oldName) {
-        this.oldName = oldName;
-    }
-
-    public String getNewName() {
-        return newName;
-    }
-
-    public void setNewName(String newName) {
-        this.newName = newName;
-    }
 
     public Long getSn() {
         return sn;
@@ -77,10 +54,8 @@ public class ExcelReadDTO {
 
     @Override
     public String toString() {
-        return "ExcelReadDTO{" +
-                "oldName='" + oldName + '\'' +
-                ", newName='" + newName + '\'' +
-                ", sn=" + sn +
+        return "FileListDTO{" +
+                "sn=" + sn +
                 ", ip='" + ip + '\'' +
                 ", upload_date=" + upload_date +
                 '}';

@@ -28,6 +28,24 @@ function fileChange(obj){
 
 }
 
+function listChange(obj){
+
+    var data = new FormData();
+
+    data.append("file", obj[0]);
+
+    fetch("/excel/excelToFileList", {
+        method: "POST",
+        headers: {},
+        body: data
+    }).then(res =>{
+        console.log("성공");
+    }).catch(error=>{
+        console.log("실패");
+    })
+
+}
+
 function fileUpload(file){
 
     var data = new FormData(file);

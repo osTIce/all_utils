@@ -15,9 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +50,7 @@ public class ExcelController {
      * date: 2023-06-20
      */
     @PostMapping("/excel/excelToFileName")
-    public void ExcelToFileName(@RequestParam("fileUpload") MultipartFile file, Model model){
+    public void ExcelToFileName(@RequestParam("fileUpload") MultipartFile file){
 
         List<ExcelReadDTO> fileNameList = new ArrayList<>();
         String ip = getUserIp();
@@ -91,6 +89,16 @@ public class ExcelController {
         }catch (IOException e){
             logger.error("파일 읽기 오류가 발생했습니다.");
         }
+    }
+
+    /**
+     * 엑셀 서식 파일 업로드 메서드
+     * return: void
+     * date: 2023-06-20
+     */
+    @PostMapping("/excel/excelToFileList")
+    public void excelToFileList(@RequestParam("fileListUpload") MultipartFile file){
+        System.out.println(file);
     }
 
     /**
