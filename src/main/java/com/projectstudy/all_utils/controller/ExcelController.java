@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class ExcelController {
      * return: void
      * date: 2023-06-20
      */
+    @ResponseBody
     @PostMapping("/excel/excelToFileName")
     public void ExcelToFileName(@RequestParam("fileUpload") MultipartFile file){
 
@@ -92,13 +94,24 @@ public class ExcelController {
     }
 
     /**
-     * 엑셀 서식 파일 업로드 메서드
+     * 엑셀 파일 목록 업로드 메서드
      * return: void
-     * date: 2023-06-20
+     * date: 2023-07-02
      */
+    @ResponseBody
     @PostMapping("/excel/excelToFileList")
-    public void excelToFileList(@RequestParam("fileListUpload") MultipartFile file){
-        System.out.println(file);
+    public void excelToFileList(MultipartHttpServletRequest file){
+
+        List<MultipartFile> fileList = file.getFiles("fileListUpload");
+        List<String> fileNameList = new ArrayList<>();
+
+        for(MultipartFile fileOne : fileList) {
+            logger.info(fileOne.getOriginalFilename());
+            fileNameList.add(fileOne.getOriginalFilename());
+        }
+
+
+
     }
 
     /**
@@ -108,7 +121,6 @@ public class ExcelController {
      */
     @GetMapping("/excel/excelFormDown")
     public ResponseEntity<Resource> excelFormDown(){
-
         return excelService.excelTemplateFileDown("classpath:/static/excel/", "ExcelTemplate.xlsx");
     }
 

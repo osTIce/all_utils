@@ -28,11 +28,11 @@ function fileChange(obj){
 
 }
 
-function listChange(obj){
+function listChange(){
 
-    var data = new FormData();
+    var listUploadForm = document.getElementById('list-upload-form');
 
-    data.append("file", obj[0]);
+    var data = new FormData(listUploadForm);
 
     fetch("/excel/excelToFileList", {
         method: "POST",
