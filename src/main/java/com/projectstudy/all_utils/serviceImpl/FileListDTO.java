@@ -28,6 +28,9 @@ public class FileListDTO {
     @Column(name="UPLOAD_DATE")
     private Timestamp upload_date = null;
 
+    @Column(name="FILE_NAME")
+    private String fileName = null;
+
     public Long getSn() {
         return sn;
     }
@@ -52,12 +55,21 @@ public class FileListDTO {
         this.upload_date = upload_date;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     @Override
     public String toString() {
         return "FileListDTO{" +
                 "sn=" + sn +
                 ", ip='" + ip + '\'' +
                 ", upload_date=" + upload_date +
+                ", fileName='" + fileName + '\'' +
                 '}';
     }
 }

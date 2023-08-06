@@ -100,7 +100,7 @@ public class ExcelController {
      */
     @ResponseBody
     @PostMapping("/excel/excelToFileList")
-    public void excelToFileList(MultipartHttpServletRequest file){
+    public void excelToFileList(MultipartHttpServletRequest file, Model model){
 
         List<MultipartFile> fileList = file.getFiles("fileListUpload");
         List<String> fileNameList = new ArrayList<>();
@@ -109,9 +109,6 @@ public class ExcelController {
             logger.info(fileOne.getOriginalFilename());
             fileNameList.add(fileOne.getOriginalFilename());
         }
-
-
-
     }
 
     /**
