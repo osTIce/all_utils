@@ -18,12 +18,12 @@ public class ExcelNameService {
         this.excelNameRepository = excelNameRepository;
     }
 
-    public void ExcelNameSave(ExcelReadDTO excelReadDTO){
+    public void excelNameSave(ExcelReadDTO excelReadDTO){
         excelNameRepository.save(excelReadDTO);
     }
 
-    public void ExcelNameRemove(String ip){
-        excelNameRepository.ExcelNameRemove(ip);
+    public void excelNameRemove(String ip){
+        excelNameRepository.excelNameRemove(ip);
     }
 
 }

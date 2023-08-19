@@ -22,15 +22,16 @@ public class ExcelReadDTO {
     // 파일 변경 후 이름
     @Column(name="NEWNAME")
     private String newName = null;
+    // 시리얼 넘버
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE
             , generator = "FILE_SEQ_GENERATOR")
     @Column(name="SN")
     private Long sn = null;
-
+    // 사용자 IP
     @Column(name="IP")
     private String ip = null;
-
+    // 업로드 날짜
     @CreationTimestamp
     @Column(name="UPLOAD_DATE")
     private Timestamp upload_date = null;

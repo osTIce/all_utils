@@ -15,19 +15,23 @@ import java.sql.Timestamp;
 @Table(name="FILELIST")
 public class FileListDTO {
 
+    // 시리얼 넘버
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE
             , generator = "FILE_LIST_SEQ_GENERATOR")
     @Column(name="SN")
     private Long sn = null;
 
+    // 사용자 IP
     @Column(name="IP")
     private String ip = null;
 
+    // 업로드 날짜
     @CreationTimestamp
     @Column(name="UPLOAD_DATE")
     private Timestamp upload_date = null;
 
+    // 변경하는 파일 이름
     @Column(name="FILE_NAME")
     private String fileName = null;
 

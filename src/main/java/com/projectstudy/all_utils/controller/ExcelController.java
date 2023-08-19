@@ -2,7 +2,9 @@ package com.projectstudy.all_utils.controller;
 
 import com.projectstudy.all_utils.service.ExcelNameService;
 import com.projectstudy.all_utils.service.ExcelService;
+import com.projectstudy.all_utils.service.FileNameService;
 import com.projectstudy.all_utils.serviceImpl.ExcelReadDTO;
+import com.projectstudy.all_utils.serviceImpl.FileListDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -32,6 +34,8 @@ public class ExcelController {
     private ExcelService excelService;
     @Autowired
     private ExcelNameService excelNameService;
+    @Autowired
+    private FileNameService fileNameService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -57,7 +61,7 @@ public class ExcelController {
         List<ExcelReadDTO> fileNameList = new ArrayList<>();
         String ip = getUserIp();
 
-        excelNameService.ExcelNameRemove(ip);
+        excelNameService.excelNameRemove(ip);
 
         try{
 
@@ -81,7 +85,7 @@ public class ExcelController {
                     logger.info(excelReadDTO.getIp());
 
                     fileNameList.add(excelReadDTO);
-                    excelNameService.ExcelNameSave(excelReadDTO);
+                    excelNameService.excelNameSave(excelReadDTO);
                 }
 
             } else {
@@ -102,12 +106,21 @@ public class ExcelController {
     @PostMapping("/excel/excelToFileList")
     public void excelToFileList(MultipartHttpServletRequest file, Model model){
 
+        String ip = getUserIp();
+
+        fileNameService.fileNameRemove(ip);
+
         List<MultipartFile> fileList = file.getFiles("fileListUpload");
-        List<String> fileNameList = new ArrayList<>();
 
         for(MultipartFile fileOne : fileList) {
             logger.info(fileOne.getOriginalFilename());
-            fileNameList.add(fileOne.getOriginalFilename());
+
+            FileListDTO fileListDTO = new FileListDTO();
+
+            fileListDTO.setFileName(fileOne.getOriginalFilename());
+            fileListDTO.setIp(ip);
+
+            fileNameService.fileNameSave(fileListDTO);
         }
     }
 
