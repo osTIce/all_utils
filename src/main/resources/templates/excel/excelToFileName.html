@@ -1,48 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link th:href="@{/css/home/home.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/excel/excel.css}" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" th:src="@{/js/excel/excel.js}"></script>
-</head>
-<body>
-    <div th:replace="~{layout/header :: header}"></div>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link th:href="@{/css/home/home.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/excel/excel.css}" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" th:src="@{/js/excel/excel.js}"></script>
+    </head>
+    <body>
+        <div th:replace="~{layout/header :: header}"></div>
 
-    <div class="step">
-        <h2>1. Excel 서식 다운로드 진행</h2>
-        <button type="button" class="btn-down"> <span th:onclick="|location.href='@{/excel/excelFormDown}'|">Excel 서식 다운로드</span> </button>
-    </div>
-
-    <form enctype="multipart/form-data" th:action="@{/excel/excelToFileName}" method="post" id="upload-form">
         <div class="step">
-            <h2 id="flo-left">2. 1번에서 다운로드 한 Excel 서식 업로드 진행</h2>
-            <input class="file-upload-name" placeholder="Excel 서식 업로드" id="upload-name" disabled>
-            <button class="btn-down" type="button">
-                <label for="file-upload">Excel 서식 업로드</label>
-                <input class="file-upload" name="fileUpload" id="file-upload" type="file" th:onchange="fileChange(this)">
-            </button>
-            <h4 id="sub-message">(xls, xlsx 확장자 파일만 업로드 가능합니다.)</h4>
+            <h2>1. Excel 서식 다운로드 진행</h2>
+            <button type="button" class="btn-down"> <span th:onclick="|location.href='@{/excel/excelFormDown}'|">Excel 서식 다운로드</span> </button>
         </div>
-    </form>
 
-    <form enctype="multipart/form-data" th:action="@{/excel/excelToFileList}" method="post" id="list-upload-form">
+        <form enctype="multipart/form-data" th:action="@{/excel/excelToFileName}" method="post" id="upload-form">
+            <div class="step">
+                <h2 id="flo-left">2. 1번에서 다운로드 한 Excel 서식 업로드 진행</h2>
+                <input class="file-upload-name" placeholder="Excel 서식 업로드" id="upload-name" disabled>
+                <button class="btn-down" type="button">
+                    <label for="file-upload">Excel 서식 업로드</label>
+                    <input class="file-upload" name="fileUpload" id="file-upload" type="file" th:onchange="fileChange(this)">
+                </button>
+                <h4 id="sub-message">(xls, xlsx 확장자 파일만 업로드 가능합니다.)</h4>
+            </div>
+        </form>
+
+        <form enctype="multipart/form-data" th:action="@{/excel/excelToFileList}" method="post" id="list-upload-form">
+            <div class="step">
+                <h2>3. 변경할 파일 목록 업로드</h2>
+                <input class="file-upload-name" placeholder="변경할 파일 목록 업로드" disabled>
+                <button class="btn-down" type="button">
+                    <label for="file-list-upload">변경 파일 업로드</label>
+                    <input class="file-upload" name="fileListUpload" id="file-list-upload" type="file" th:onchange="listChange()" multiple>
+                </button>
+            </div>
+        </form>
+
         <div class="step">
-            <h2>3. 변경할 파일 목록 업로드</h2>
-            <input class="file-upload-name" placeholder="변경할 파일 목록 업로드" disabled>
-            <button class="btn-down" type="button">
-                <label for="file-list-upload">변경 파일 업로드</label>
-                <input class="file-upload" name="fileListUpload" id="file-list-upload" type="file" th:onchange="listChange()" multiple>
-            </button>
+            <h2>4. 이름 변경하기 </h2>
+            <button type="button" class="btn-down"> <span th:onclick="|location.href='@{/excel/excelUploadFileList}'|">이름 변경 진행</span> </button>
         </div>
-    </form>
-
-    <div class="step">
-        <h2>4. 이름 변경하기 </h2>
-        <button class="btn-down" type="button">
-            <button type="button" class="btn-down"> <span th:onclick="|location.href='@{/excel/excelFormDown}'|">이름 변경 진행</span> </button>
-        </button>
-    </div>
-</body>
+    </body>
 </html>

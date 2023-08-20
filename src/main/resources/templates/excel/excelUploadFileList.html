@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link th:href="@{/css/home/home.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/excel/excel.css}" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" th:src="@{/js/excel/excel.js}"></script>
+    </head>
+    <body>
+        <div th:replace="~{layout/header :: header}"></div>
+
+        <div id="list-table1">
+            <table class="list-table">
+                <thead>
+                    <th>번호</th>
+                    <th>변경전 이름</th>
+                    <th>변경후 이름</th>
+                </thead>
+                <tbody>
+                    <tr th:each="excelList : ${excelList}">
+                        <td th:text="${excelListStat.count}"></td>
+                        <td th:text="${excelList.oldName}"></td>
+                        <td th:text="${excelList.newName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="list-table2">
+            <table class="list-table">
+                <thead>
+                    <th>번호</th>
+                    <th>변경해야 하는 파일 이름</th>
+                </thead>
+                <tbody>
+                    <tr th:each="fileList : ${fileList}">
+                        <td th:text="${fileListStat.count}"></td>
+                        <td th:text="${fileList.fileName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <button type="button" class="btn-down"> <span th:onclick="|location.href='@{/excel/fileNameChange}'|">이름 변경</span> </button>
+        </div>
+    </body>
+</html>

@@ -5,6 +5,8 @@ import com.projectstudy.all_utils.serviceImpl.FileListDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @Service
 public class FileNameService {
@@ -22,4 +24,7 @@ public class FileNameService {
         fileNameRepository.fileNameRemove(ip);
     }
 
+    public List<FileListDTO> fileNameSelect(String ip){
+        return fileNameRepository.fileNameSelect(ip);
+    }
 }

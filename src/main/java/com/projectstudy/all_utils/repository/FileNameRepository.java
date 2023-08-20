@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FileNameRepository extends JpaRepository<FileListDTO, Long> {
 
@@ -15,4 +17,7 @@ public interface FileNameRepository extends JpaRepository<FileListDTO, Long> {
     @Modifying
     void fileNameRemove(@Param("ip") String ip);
 
+    @Query(value="SELECT * FROM FILELIST fl WHERE fl.ip=:ip", nativeQuery = true)
+    @Modifying
+    List<FileListDTO> fileNameSelect(@Param("ip") String ip);
 }

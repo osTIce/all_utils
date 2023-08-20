@@ -23,9 +23,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ExcelController {
@@ -132,6 +135,58 @@ public class ExcelController {
     @GetMapping("/excel/excelFormDown")
     public ResponseEntity<Resource> excelFormDown(){
         return excelService.excelTemplateFileDown("classpath:/static/excel/", "ExcelTemplate.xlsx");
+    }
+    
+    /**
+     * 파일 이름 일괄 변경 작업 페이지로 이동 메서드
+     * return: String
+     * date: 2023-08-20
+     */
+    @GetMapping("/excel/excelUploadFileList")
+    public String excelUploadFileList(Model model){
+
+        String ip = getUserIp();
+
+        List<ExcelReadDTO> excelList = excelNameService.excelNameSelect(ip);
+        List<FileListDTO> fileList = fileNameService.fileNameSelect(ip);
+
+        model.addAttribute("excelList", excelList);
+        model.addAttribute("fileList", fileList);
+
+        return "/excel/excelUploadFileList";
+    }
+
+    /**
+     * 파일 이름 변경 메서드
+     * return: String
+     * date: 2023-08-20
+     */
+    @GetMapping("/excel/fileNameChange")
+    public String fileNameChange(){
+
+        String ip = getUserIp();
+
+        List<ExcelReadDTO> excelList = excelNameService.excelNameSelect(ip);
+        List<FileListDTO> fileList = fileNameService.fileNameSelect(ip);
+
+        Map<String, String> map = new HashMap<>();
+
+        for(int i = 0; i < excelList.size(); i++){
+            map.put(excelList.get(i).getOldName(), excelList.get(i).getNewName());
+        }
+
+        for(String key : map.keySet()){
+            for(int j = 0; j < fileList.size(); j++){
+                if(fileList.get(j).getFileName().contains(key)){
+                    logger.info("키 값: " + key);
+                    logger.info("리스트 값: " + fileList.get(j).getFileName());
+
+
+                }
+            }
+        }
+
+        return "redirect:/";
     }
 
     /**

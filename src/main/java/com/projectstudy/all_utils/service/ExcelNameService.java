@@ -26,4 +26,7 @@ public class ExcelNameService {
         excelNameRepository.excelNameRemove(ip);
     }
 
+    public List<ExcelReadDTO> excelNameSelect(String ip){
+        return excelNameRepository.excelNameSelect(ip);
+    }
 }

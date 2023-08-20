@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ExcelNameRepository extends JpaRepository<ExcelReadDTO, Long> {
 
@@ -14,4 +16,7 @@ public interface ExcelNameRepository extends JpaRepository<ExcelReadDTO, Long> {
     @Modifying
     void excelNameRemove(@Param("ip") String ip);
 
+    @Query(value="SELECT * FROM EXCELNAME en WHERE en.ip=:ip", nativeQuery = true)
+    @Modifying
+    List<ExcelReadDTO> excelNameSelect(@Param("ip") String ip);
 }
