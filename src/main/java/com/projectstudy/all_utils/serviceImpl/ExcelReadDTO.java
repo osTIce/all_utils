@@ -34,7 +34,7 @@ public class ExcelReadDTO {
     // 업로드 날짜
     @CreationTimestamp
     @Column(name="UPLOAD_DATE")
-    private Timestamp upload_date = null;
+    private Timestamp uploadDate = null;
 
     public String getOldName() {
         return oldName;
@@ -68,12 +68,12 @@ public class ExcelReadDTO {
         this.ip = ip;
     }
 
-    public Timestamp getUpload_date() {
-        return upload_date;
+    public Timestamp getUploadDate() {
+        return uploadDate;
     }
 
-    public void setUpload_date(Timestamp upload_date) {
-        this.upload_date = upload_date;
+    public void setUploadDate(Timestamp uploadDate) {
+        this.uploadDate = uploadDate;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ExcelReadDTO {
                 ", newName='" + newName + '\'' +
                 ", sn=" + sn +
                 ", ip='" + ip + '\'' +
-                ", upload_date=" + upload_date +
+                ", uploadDate=" + uploadDate +
                 '}';
     }
 }

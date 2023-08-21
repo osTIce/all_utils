@@ -23,8 +23,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -178,10 +179,23 @@ public class ExcelController {
         for(String key : map.keySet()){
             for(int j = 0; j < fileList.size(); j++){
                 if(fileList.get(j).getFileName().contains(key)){
+                    FileListDTO fileListDTO = new FileListDTO();
+
                     logger.info("키 값: " + key);
                     logger.info("리스트 값: " + fileList.get(j).getFileName());
 
+                    String updateValue = map.get(key);
+                    String updateFileName = fileList.get(j).getFileName().replaceAll(key, updateValue);
 
+                    LocalDateTime localDateTime = LocalDateTime.now();
+                    Timestamp timestamp = Timestamp.valueOf(localDateTime);
+
+                    fileListDTO.setFileName(fileList.get(j).getFileName());
+                    fileListDTO.setNewFileName(updateFileName);
+                    fileListDTO.setIp(ip);
+                    fileListDTO.setUpdate_date(timestamp);
+
+                    fileNameService.fileNameUpdate(fileListDTO);
                 }
             }
         }

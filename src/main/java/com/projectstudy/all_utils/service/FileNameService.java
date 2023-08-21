@@ -27,4 +27,8 @@ public class FileNameService {
     public List<FileListDTO> fileNameSelect(String ip){
         return fileNameRepository.fileNameSelect(ip);
     }
+
+    public void fileNameUpdate(FileListDTO fileListDTO){
+        fileNameRepository.fileNameUpdate(fileListDTO);
+    }
 }

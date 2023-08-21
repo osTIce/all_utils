@@ -29,11 +29,19 @@ public class FileListDTO {
     // 업로드 날짜
     @CreationTimestamp
     @Column(name="UPLOAD_DATE")
-    private Timestamp upload_date = null;
+    private Timestamp uploadDate = null;
 
     // 변경하는 파일 이름
     @Column(name="FILE_NAME")
     private String fileName = null;
+
+    // 변경 후 파일 이름
+    @Column(name="NEW_FILE_NAME")
+    private String newFileName = null;
+
+    // 파일 이름 수정 날짜
+    @Column(name="UPDATE_DATE")
+    private Timestamp updateDate = null;
 
     public Long getSn() {
         return sn;
@@ -52,11 +60,11 @@ public class FileListDTO {
     }
 
     public Timestamp getUpload_date() {
-        return upload_date;
+        return uploadDate;
     }
 
-    public void setUpload_date(Timestamp upload_date) {
-        this.upload_date = upload_date;
+    public void setUpload_date(Timestamp uploadDate) {
+        this.uploadDate = uploadDate;
     }
 
     public String getFileName() {
@@ -67,13 +75,31 @@ public class FileListDTO {
         this.fileName = fileName;
     }
 
+    public String getNewFileName() {
+        return newFileName;
+    }
+
+    public void setNewFileName(String newFileName) {
+        this.newFileName = newFileName;
+    }
+
+    public Timestamp getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdate_date(Timestamp updateDate) {
+        this.updateDate = updateDate;
+    }
+
     @Override
     public String toString() {
         return "FileListDTO{" +
                 "sn=" + sn +
                 ", ip='" + ip + '\'' +
-                ", upload_date=" + upload_date +
+                ", uploadDate=" + uploadDate +
                 ", fileName='" + fileName + '\'' +
+                ", newFileName='" + newFileName + '\'' +
+                ", updateDate=" + updateDate +
                 '}';
     }
 }
