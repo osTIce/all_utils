@@ -23,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -114,18 +115,31 @@ public class ExcelController {
 
         fileNameService.fileNameRemove(ip);
 
+        String folderName = ip.replace(":", ".");
+        String path = "C:\\Company\\Upload\\" + folderName + "\\";
+        File uploadFolder = new File(path);
+        uploadFolder.mkdirs();
+
         List<MultipartFile> fileList = file.getFiles("fileListUpload");
 
-        for(MultipartFile fileOne : fileList) {
-            logger.info(fileOne.getOriginalFilename());
+        try{
+            for(MultipartFile fileOne : fileList) {
+                File uploadFiles = new File(path + fileOne.getOriginalFilename());
+                fileOne.transferTo(uploadFiles);
 
-            FileListDTO fileListDTO = new FileListDTO();
+                logger.info(fileOne.getOriginalFilename());
 
-            fileListDTO.setFileName(fileOne.getOriginalFilename());
-            fileListDTO.setIp(ip);
+                FileListDTO fileListDTO = new FileListDTO();
 
-            fileNameService.fileNameSave(fileListDTO);
+                fileListDTO.setFileName(fileOne.getOriginalFilename());
+                fileListDTO.setIp(ip);
+
+                fileNameService.fileNameSave(fileListDTO);
+            }
+        }catch(IOException e){
+            logger.error("파일 읽기 오류가 발생했습니다.");
         }
+
     }
 
     /**
