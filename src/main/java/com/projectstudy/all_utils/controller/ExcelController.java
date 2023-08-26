@@ -25,6 +25,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -190,6 +193,13 @@ public class ExcelController {
             map.put(excelList.get(i).getOldName(), excelList.get(i).getNewName());
         }
 
+        String folderName = ip.replace(":", ".");
+        String path = "C:\\Company\\Upload\\" + folderName + "\\";
+
+        String downloadFolder = System.getProperty("user.home") + "\\Downloads\\nameChanges\\";
+        File filePath = new File(downloadFolder);
+        filePath.mkdirs();
+
         for(String key : map.keySet()){
             for(int j = 0; j < fileList.size(); j++){
                 if(fileList.get(j).getFileName().contains(key)){
@@ -210,7 +220,23 @@ public class ExcelController {
                     fileListDTO.setUpdate_date(timestamp);
 
                     fileNameService.fileNameUpdate(fileListDTO);
+                }else{
+                    FileListDTO fileListDTO = new FileListDTO();
+                    LocalDateTime localDateTime = LocalDateTime.now();
+                    Timestamp timestamp = Timestamp.valueOf(localDateTime);
+
+                    fileListDTO.setFileName(fileList.get(j).getFileName());
+                    fileListDTO.setNewFileName(fileList.get(j).getFileName());
+                    fileListDTO.setIp(ip);
+                    fileListDTO.setUpdate_date(timestamp);
+
+                    fileNameService.fileNameUpdate(fileListDTO);
                 }
+
+                File file = new File(path + fileList.get(j).getFileName());
+                File file1 = new File(downloadFolder + fileList.get(j).getFileName().replaceAll(key, map.get(key)));
+
+                file.renameTo(file1);
             }
         }
 
@@ -229,6 +255,7 @@ public class ExcelController {
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
         ip = request.getHeader("X-Forwarded-For");
+
 
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
