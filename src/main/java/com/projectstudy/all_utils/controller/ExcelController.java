@@ -6,6 +6,7 @@ import com.projectstudy.all_utils.service.FileNameService;
 import com.projectstudy.all_utils.serviceImpl.ExcelReadDTO;
 import com.projectstudy.all_utils.serviceImpl.FileListDTO;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -25,9 +26,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -186,6 +184,7 @@ public class ExcelController {
 
         List<ExcelReadDTO> excelList = excelNameService.excelNameSelect(ip);
         List<FileListDTO> fileList = fileNameService.fileNameSelect(ip);
+        FileListDTO fileListDTO = new FileListDTO();
 
         Map<String, String> map = new HashMap<>();
 
@@ -195,7 +194,6 @@ public class ExcelController {
 
         String folderName = ip.replace(":", ".");
         String path = "C:\\Company\\Upload\\" + folderName + "\\";
-
         String downloadFolder = System.getProperty("user.home") + "\\Downloads\\nameChanges\\";
         File filePath = new File(downloadFolder);
         filePath.mkdirs();
@@ -203,8 +201,6 @@ public class ExcelController {
         for(String key : map.keySet()){
             for(int j = 0; j < fileList.size(); j++){
                 if(fileList.get(j).getFileName().contains(key)){
-                    FileListDTO fileListDTO = new FileListDTO();
-
                     logger.info("키 값: " + key);
                     logger.info("리스트 값: " + fileList.get(j).getFileName());
 
@@ -220,8 +216,16 @@ public class ExcelController {
                     fileListDTO.setUpdate_date(timestamp);
 
                     fileNameService.fileNameUpdate(fileListDTO);
+
+                    try{
+                        File file = new File(path + fileList.get(j).getFileName());
+                        File file1 = new File(downloadFolder + updateFileName);
+
+                        FileUtils.moveFile(file, file1);
+                    }catch(IOException e){
+                        logger.error("파일 읽기 오류가 발생했습니다.");
+                    }
                 }else{
-                    FileListDTO fileListDTO = new FileListDTO();
                     LocalDateTime localDateTime = LocalDateTime.now();
                     Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
@@ -232,12 +236,21 @@ public class ExcelController {
 
                     fileNameService.fileNameUpdate(fileListDTO);
                 }
-
-                File file = new File(path + fileList.get(j).getFileName());
-                File file1 = new File(downloadFolder + fileList.get(j).getFileName().replaceAll(key, map.get(key)));
-
-                file.renameTo(file1);
             }
+        }
+
+        // 이름 변경하지 않아도 되는 기타 파일들을 그대로 이동
+        File otherFile = new File(path);
+        File[] otherFileList = otherFile.listFiles();
+
+        try {
+            for (File file : otherFileList) {
+                File file1 = new File(downloadFolder + file.getName());
+
+                FileUtils.moveFile(file, file1);
+            }
+        }catch(IOException e){
+            logger.error("파일 읽기 오류가 발생했습니다.");
         }
 
         return "redirect:/";
