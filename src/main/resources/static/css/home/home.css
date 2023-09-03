@@ -1,8 +1,46 @@
-h1 {
+html, body{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+header h1 {
   color: #fff;
   padding: 0.7rem 0.7rem 0.7rem 2rem;
   background-image: -webkit-linear-gradient(left, #000000 0%, #a7ffeb 100%);
   background-image: linear-gradient(to right, #000000 0%, #a7ffeb 100%);
   -webkit-transform: skew(-15deg);
   transform: skew(-15deg);
+  margin-top: 0px;
+}
+
+.box {
+  border: 10px solid;
+  border-style: inset;
+}
+
+.box a {
+  font-size: 200%;
+  font-style: italic;
+  margin: 10px;
+  text-decoration-line: none;
+}
+
+footer h2 {
+  color: #fff;
+  padding: 0.7rem 0.7rem 0.7rem 2rem;
+  background-image: -webkit-linear-gradient(left, #000000 0%, #a7ffeb 100%);
+  background-image: linear-gradient(to right, #000000 0%, #a7ffeb 100%);
+  -webkit-transform: skew(15deg);
+  transform: skew(15deg);
+  bottom: 0;
+  position: absolute;
+  width: 97%;
+  margin-bottom: 0px;
 }

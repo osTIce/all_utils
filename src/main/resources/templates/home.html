@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link th:href="@{/css/home/home.css}" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-    <div th:replace="~{layout/header :: header}"></div>
-    <div>
-        <a th:href="@{/excel/excelToFileName}"> Excel To File Name </a>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link th:href="@{/css/home/home.css}" rel="stylesheet" type="text/css"/>
+    </head>
+    <header th:replace="~{layout/header :: header}"></header>
+    <body>
+        <div class="box">
+            <a th:href="@{/excel/excelToFileName}"> Excel To File Name (엑셀 서식 파일로 파일 이름 일괄 변경)</a>
+        </div>
+    </body>
+    <footer th:replace="~{layout/footer :: footer}"></footer>
 </html>
