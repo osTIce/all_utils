@@ -4,11 +4,12 @@
         <meta charset="UTF-8">
         <title>Title</title>
         <link th:href="@{/css/home/home.css}" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" th:src="@{/js/home/login.js}"></script>
     </head>
     <header th:replace="~{layout/header :: header}"></header>
     <body>
         <div class="box">
-            <a th:href="@{/excel/excelToFileName}"> Excel To File Name (엑셀 서식 파일로 파일 이름 일괄 변경)</a>
+            <a th:href="@{/excel/excelToFileName}"> Excel To File Name (엑셀 서식 파일로 파일 이름 일괄 변경) </a>
         </div>
     </body>
     <footer th:replace="~{layout/footer :: footer}"></footer>
