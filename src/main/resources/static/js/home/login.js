@@ -1,15 +1,17 @@
-document.addEventListener("DOMContentLoaded", function(){
+function userLogin(){
 
-    const signUpButton = document.getElementById('signUp');
-    const signInButton = document.getElementById('signIn');
-    const container = document.getElementById('container');
+    var loginForm = document.getElementById('login-form');
 
-    signUpButton.addEventListener('click', () => {
-      container.classList.add("right-panel-active");
-    });
+    var data = new FormData(loginForm);
 
-    signInButton.addEventListener('click', () => {
-      container.classList.remove("right-panel-active");
-    });
+    fetch("/usr/login", {
+        method: "POST",
+        headers: {},
+        body: data
+    }).then(res =>{
+        console.log("성공");
+    }).catch(error=>{
+        console.log("실패");
+    })
 
-});
+}

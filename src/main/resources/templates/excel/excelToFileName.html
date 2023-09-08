@@ -15,7 +15,7 @@
             <button type="button" class="btn-down"> <span th:onclick="|location.href='@{/excel/excelFormDown}'|">Excel 서식 다운로드</span> </button>
         </div>
 
-        <form enctype="multipart/form-data" th:action="@{/excel/excelToFileName}" method="post" id="upload-form">
+        <form enctype="multipart/form-data" id="upload-form">
             <div class="step">
                 <h2 id="flo-left">2. 1번에서 다운로드 한 Excel 서식 업로드 진행</h2>
                 <input class="file-upload-name" placeholder="Excel 서식 업로드" id="upload-name" disabled>
@@ -27,7 +27,7 @@
             </div>
         </form>
 
-        <form enctype="multipart/form-data" th:action="@{/excel/excelToFileList}" method="post" id="list-upload-form">
+        <form enctype="multipart/form-data" id="list-upload-form">
             <div class="step">
                 <h2>3. 변경할 파일 목록 업로드</h2>
                 <input class="file-upload-name" placeholder="변경할 파일 목록 업로드" disabled>
