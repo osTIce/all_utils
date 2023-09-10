@@ -10,6 +10,8 @@ function userLogin(){
         body: data
     }).then(res =>{
         console.log("성공");
+        alert("로그인에 성공했습니다.");
+        location.href = "/";
     }).catch(error=>{
         console.log("실패");
     })
