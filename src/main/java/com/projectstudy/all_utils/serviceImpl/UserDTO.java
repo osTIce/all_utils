@@ -34,6 +34,10 @@ public class UserDTO {
     @Column(name="USER_LAST_CONNECT_DATE")
     private Timestamp userLastConnectDate = null;
 
+    // 사용자 암호화 Salt 값
+    @Column(name="USER_SALT")
+    private String userSalt = null;
+
     public String getUserId() {
         return userId;
     }
@@ -82,6 +86,14 @@ public class UserDTO {
         this.userLastConnectDate = userLastConnectDate;
     }
 
+    public String getUserSalt() {
+        return userSalt;
+    }
+
+    public void setUserSalt(String userSalt) {
+        this.userSalt = userSalt;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -91,6 +103,7 @@ public class UserDTO {
                 ", userStat='" + userStat + '\'' +
                 ", userStatUpdateDate=" + userStatUpdateDate +
                 ", userLastConnectDate=" + userLastConnectDate +
+                ", userSalt='" + userSalt + '\'' +
                 '}';
     }
 }

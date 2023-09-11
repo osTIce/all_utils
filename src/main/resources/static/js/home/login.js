@@ -17,3 +17,11 @@ function userLogin(){
     })
 
 }
+
+function userIdCheck(){
+
+}
+
+function userJoin(){
+
+}

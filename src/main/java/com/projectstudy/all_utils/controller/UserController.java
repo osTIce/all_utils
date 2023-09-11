@@ -98,4 +98,14 @@ public class UserController {
 
         return sb.toString();
     }
+
+    /**
+     * 회원가입 페이지로 이동 메서드
+     * return: String
+     * date: 2023-09-11
+     */
+    @GetMapping("/usr/join")
+    public String join(){
+        return "join";
+    }
 }
