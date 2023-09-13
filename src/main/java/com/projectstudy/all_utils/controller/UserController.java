@@ -1,8 +1,14 @@
 package com.projectstudy.all_utils.controller;
 
+import com.projectstudy.all_utils.service.UserService;
+import com.projectstudy.all_utils.serviceImpl.UserDTO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,8 +18,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import java.util.List;
+
 @Controller
 public class UserController {
+
+    @Autowired
+    private UserService userService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
@@ -107,5 +118,28 @@ public class UserController {
     @GetMapping("/usr/join")
     public String join(){
         return "join";
+    }
+
+    @ResponseBody
+    @PostMapping("/usr/joinIdCheck")
+    public String joinIdCheck(@RequestParam("userId") String userId, Model model){
+
+        String userYN = "";
+
+        logger.info("사용자 아이디: " + userId);
+
+        List<UserDTO> userCheck = userService.joinUserIdCheck(userId);
+
+        logger.info("사용자 존재 유무 확인: " + userCheck);
+
+        if(userCheck.size() == 0){
+            userYN = "Yes";
+            logger.info("동일한 사용자 존재하지 않음");
+        } else {
+            userYN = "No";
+            logger.error("동일한 사용자 존재");
+        }
+
+        return userYN;
     }
 }
