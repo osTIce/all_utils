@@ -120,6 +120,11 @@ public class UserController {
         return "join";
     }
 
+    /**
+     * 회원가입시 중복 아이디 체크 메서드
+     * return: String
+     * date: 2023-09-13
+     */
     @ResponseBody
     @PostMapping("/usr/joinIdCheck")
     public String joinIdCheck(@RequestParam("userId") String userId, Model model){
@@ -142,4 +147,18 @@ public class UserController {
 
         return userYN;
     }
+
+    /**
+     * 회원가입 메서드
+     * return: String
+     * date: 2023-09-16
+     */
+    @ResponseBody
+    @PostMapping("/usr/join")
+    public void join(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw){
+
+
+
+    }
+
 }

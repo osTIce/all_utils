@@ -7,9 +7,11 @@
     <header th:fragment="header">
         <!-- home.css 파일에 header h1 a 태그에 float: right 스타일 적용으로 인한 거꾸로 출력 -->
         <!-- 이 부분 추후에 수정할 예정... 2023-09-11 -->
-        <h1> All Utils
-            <a th:href="@{/usr/join}"> 회원가입 </a>
-            <a th:href="@{/usr/login}"> 로그인 </a>
+        <h1> <a th:href="@{/}"> All Utils </a>
+            <span>
+                <a th:href="@{/usr/join}"> 회원가입 </a>
+                <a th:href="@{/usr/login}"> 로그인 </a>
+            </span>
         </h1>
     </header>
 </html>
